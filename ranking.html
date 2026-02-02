@@ -2,41 +2,65 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ranking Venón</title>
+    <title>Ranking | VENÓN CLAN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { background: #070707; color: white; font-family: sans-serif; text-align: center; }
-        .clan-list { max-width: 500px; margin: auto; background: #111; padding: 20px; border: 1px solid #b30000; border-radius: 10px; }
-        .player { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px; 
-            border-bottom: 1px solid #222; 
-        }
-        .name { font-weight: bold; color: #d4af37; }
-        iframe { border: none; height: 30px; width: 120px; overflow: hidden; }
+        body { background: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 40px; }
+        .ranking-card { width: 100%; max-width: 500px; background: #111; border: 1px solid #333; border-radius: 15px; box-shadow: 0 0 20px rgba(179,0,0,0.4); }
+        .title { background: #b30000; font-family: 'Orbitron'; padding: 15px; text-align: center; font-size: 1.2rem; border-radius: 15px 15px 0 0; }
+        
+        .player-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #222; }
+        .player-item:last-child { border-bottom: none; }
+
+        /* Foto de Steam/Microsoft */
+        .avatar-container { position: relative; width: 60px; height: 60px; margin-right: 15px; }
+        .avatar { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #d4af37; object-fit: cover; }
+        
+        .details { flex-grow: 1; }
+        .username { font-weight: bold; font-size: 1.1rem; color: #fff; margin-bottom: 4px; display: block; }
+        
+        /* El ELO sacado por Iframe para evitar errores de CORS */
+        .elo-box { width: 110px; height: 32px; border: none; filter: invert(1) hue-rotate(180deg) brightness(1.5); }
     </style>
 </head>
 <body>
 
-    <div class="clan-list">
-        <h2>RANKING VENÓN CLAN</h2>
+<div class="ranking-card">
+    <div class="title">VENÓN CLAN RANKING</div>
+    <div id="players-list">
+        </div>
+</div>
+
+<script>
+    // Agrega aquí los SteamID64 que vayas consiguiendo
+    const clan = [
+        { n: "Envidiates", id: "5687437", s: "76561198162226294" },
+        { n: "Mauricio", id: "1947348", s: "76561198114400033" },
+        { n: "Sinister", id: "2598146", s: "76561198337728254" }
+    ];
+
+    const list = document.getElementById('players-list');
+
+    clan.forEach(p => {
+        // Si no tienes el SteamID64, usa la foto de Insights por defecto
+        const imgUrl = p.s ? `https://avatars.steamstatic.com/${p.s.slice(-8)}_full.jpg` : `https://www.aoe2insights.com/static/img/players/player_${p.id}.png`;
         
-        <div class="player">
-            <span class="name">Envidiates</span>
-            <iframe src="https://www.aoe2insights.com/user/5687437/embed/stats/"></iframe>
-        </div>
-
-        <div class="player">
-            <span class="name">Mauricio</span>
-            <iframe src="https://www.aoe2insights.com/user/1947348/embed/stats/"></iframe>
-        </div>
-
-        <div class="player">
-            <span class="name">Sinister</span>
-            <iframe src="https://www.aoe2insights.com/user/2598146/embed/stats/"></iframe>
-        </div>
-    </div>
+        list.innerHTML += `
+            <div class="player-item">
+                <div class="avatar-container">
+                    <img src="https://www.aoe2insights.com/static/img/players/player_${p.id}.png" class="avatar" onerror="this.src='https://i.imgur.com/6VBx3io.png'">
+                </div>
+                <div class="details">
+                    <span class="username">${p.n}</span>
+                    <a href="https://www.aoe2insights.com/user/${p.id}/" target="_blank" style="color: #666; font-size: 10px; text-decoration: none;">PERFIL DETALLADO ↗</a>
+                </div>
+                <div class="elo-val">
+                    <iframe class="elo-box" src="https://www.aoe2insights.com/user/${p.id}/embed/stats/"></iframe>
+                </div>
+            </div>
+        `;
+    });
+</script>
 
 </body>
 </html>
