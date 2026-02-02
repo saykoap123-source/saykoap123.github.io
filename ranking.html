@@ -2,60 +2,37 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking | Venón Clan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>Ranking Venón</title>
     <style>
-        body { background: #070707; color: #f2f2f2; font-family: 'Inter', sans-serif; margin: 0; padding: 100px 20px; }
-        nav { position: fixed; top: 0; width: 100%; height: 70px; background: #000; border-bottom: 2px solid #b30000; display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .container { max-width: 500px; margin: auto; background: #111; padding: 25px; border-radius: 12px; border: 1px solid #333; }
-        h1 { font-family: 'Orbitron'; color: #d4af37; text-align: center; }
-        .player-card { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid #222; }
-        .elo { font-family: 'Orbitron'; color: #00ffcc; font-weight: bold; }
+        body { background: #070707; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+        .card { background: #111; border: 2px solid #b30000; display: inline-block; padding: 20px; border-radius: 10px; }
+        .player { margin: 15px 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .name { font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 5px; color: #d4af37; }
+        img { filter: invert(1) hue-rotate(180deg); } /* Ajusta el color si la imagen viene fea */
     </style>
 </head>
 <body>
 
-<nav><div style="font-family: 'Orbitron'; color: #b30000;">VENÓN CLAN</div></nav>
+<div class="card">
+    <h2>RANKING VENÓN CLAN</h2>
+    
+    <div class="player">
+        <span class="name">VENÓN | Hera</span>
+        <img src="https://aoe2.net/api/v1/player/rating?game=age2&leaderboard_id=3&profile_id=199325" alt="Cargando ELO...">
+    </div>
 
-<div class="container">
-    <h1>RANKING 1V1</h1>
-    <div id="ranking-list">Cargando datos reales...</div>
+    <div class="player">
+        <span class="name">VENÓN | TheViper</span>
+        <img src="https://aoe2.net/api/v1/player/rating?game=age2&leaderboard_id=3&profile_id=196240" alt="Cargando ELO...">
+    </div>
+
+    <div class="player">
+        <span class="name">VENÓN | envys</span>
+        <img src="https://aoe2.net/api/v1/player/rating?game=age2&leaderboard_id=3&profile_id=401359" alt="Cargando ELO...">
+    </div>
 </div>
 
-<script>
-    const clan = [
-        { name: "Hera", id: "199325" },
-        { name: "TheViper", id: "196240" },
-        { name: "Envys", id: "401359" },
-        { name: "Sinister", id: "2598146" }
-    ];
+<p style="font-size: 0.7rem; color: #555;">Si ves un error, es que la API de AoE2.net está caída temporalmente.</p>
 
-    async function getStats() {
-        const list = document.getElementById('ranking-list');
-        list.innerHTML = "";
-
-        for (let p of clan) {
-            try {
-                // Usamos un proxy alternativo y más ligero
-                const res = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent('https://api.aoe2companion.com/api/profiles/' + p.id)}`);
-                const data = await res.json();
-                
-                let rating = "N/A";
-                // Buscamos el ELO en la lista de ratings de la API
-                if (data.ratings) {
-                    const rm = data.ratings.find(r => r.leaderboard_id === 3);
-                    if (rm) rating = rm.rating;
-                }
-
-                list.innerHTML += `<div class="player-card"><span>${p.name}</span><span class="elo">${rating}</span></div>`;
-            } catch (error) {
-                list.innerHTML += `<div class="player-card"><span>${p.name}</span><span class="elo" style="color:orange">OFF</span></div>`;
-            }
-        }
-    }
-
-    getStats();
-</script>
 </body>
 </html>
