@@ -2,37 +2,54 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ranking Venón</title>
+    <title>Ranking Venón | Control Total</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400&display=swap" rel="stylesheet">
     <style>
-        body { background: #070707; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
-        .card { background: #111; border: 2px solid #b30000; display: inline-block; padding: 20px; border-radius: 10px; }
-        .player { margin: 15px 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .name { font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 5px; color: #d4af37; }
-        img { filter: invert(1) hue-rotate(180deg); } /* Ajusta el color si la imagen viene fea */
+        body { background: #070707; color: white; font-family: 'Inter', sans-serif; text-align: center; padding-top: 50px; }
+        .card { background: #111; border: 2px solid #b30000; border-radius: 15px; display: inline-block; padding: 30px; min-width: 320px; box-shadow: 0 0 20px rgba(179,0,0,0.3); }
+        h1 { font-family: 'Orbitron'; color: #d4af37; margin-bottom: 30px; font-size: 1.5rem; }
+        .player-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #222; font-size: 1.1rem; }
+        .elo { color: #00ffcc; font-family: 'Orbitron'; font-weight: bold; }
+        .update-tag { font-size: 0.7rem; color: #555; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>RANKING VENÓN CLAN</h2>
-    
-    <div class="player">
-        <span class="name">VENÓN | Hera</span>
-        <img src="https://aoe2.net/api/v1/player/rating?game=age2&leaderboard_id=3&profile_id=199325" alt="Cargando ELO...">
-    </div>
-
-    <div class="player">
-        <span class="name">VENÓN | TheViper</span>
-        <img src="https://aoe2.net/api/v1/player/rating?game=age2&leaderboard_id=3&profile_id=196240" alt="Cargando ELO...">
-    </div>
-
-    <div class="player">
-        <span class="name">VENÓN | envys</span>
-        <img src="https://aoe2.net/api/v1/player/rating?game=age2&leaderboard_id=3&profile_id=401359" alt="Cargando ELO...">
-    </div>
+    <h1>RANKING VENÓN CLAN</h1>
+    <div id="tabla-ranking">Cargando datos desde el cuartel general...</div>
+    <div class="update-tag">Sincronizado vía Google Cloud</div>
 </div>
 
-<p style="font-size: 0.7rem; color: #555;">Si ves un error, es que la API de AoE2.net está caída temporalmente.</p>
+<script>
+    // PEGA AQUÍ EL LINK QUE COPIASTE DE GOOGLE SHEETS (EL QUE TERMINA EN output=csv)
+    const url = 'URL_DE_TU_GOOGLE_SHEET';
 
+    async function cargarRanking() {
+        try {
+            const response = await fetch(url);
+            const data = await response.text();
+            const filas = data.split('\n');
+            let html = '';
+
+            // Saltamos la primera fila si tienes encabezados
+            for (let i = 0; i < filas.length; i++) {
+                const columnas = filas[i].split(',');
+                if (columnas.length >= 2) {
+                    html += `
+                        <div class="player-row">
+                            <span>${columnas[0]}</span>
+                            <span class="elo">${columnas[1]}</span>
+                        </div>`;
+                }
+            }
+            document.getElementById('tabla-ranking').innerHTML = html;
+        } catch (error) {
+            document.getElementById('tabla-ranking').innerHTML = "Error de conexión con la base de datos.";
+        }
+    }
+
+    cargarRanking();
+</script>
 </body>
 </html>
