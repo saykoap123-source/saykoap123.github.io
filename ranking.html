@@ -1,85 +1,53 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ranking | Venon Clan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root { --bg: #070707; --accent: #b30000; --gold: #d4af37; --text: #f2f2f2; }
-    body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at top, #1a0000, #070707 80%); color: var(--text); margin: 0; padding-top: 90px; min-height: 100vh; }
-    nav { position: fixed; top: 0; width: 100%; height: 70px; background: rgba(0,0,0,0.9); display: flex; justify-content: space-between; align-items: center; padding: 0 50px; border-bottom: 2px solid var(--accent); z-index: 1000; box-sizing: border-box; }
-    .nav-logo { font-family: 'Orbitron'; color: var(--accent); text-decoration: none; font-weight: bold; }
-    .container { max-width: 800px; margin: 20px auto; padding: 30px; background: rgba(15,15,15,0.9); border-radius: 15px; border: 1px solid rgba(179,0,0,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    h1 { font-family: 'Orbitron'; color: var(--gold); text-align: center; font-size: 1.8rem; margin-bottom: 20px; }
-    table { width: 100%; border-collapse: collapse; }
-    th { text-align: left; padding: 12px; color: var(--accent); font-family: 'Orbitron'; font-size: 0.75rem; border-bottom: 2px solid var(--accent); }
-    td { padding: 15px 12px; border-bottom: 1px solid #222; }
-    .player-name { font-weight: 600; color: #fff; }
-    .elo-val { color: #00ffcc; font-family: 'Orbitron'; font-weight: bold; font-size: 1.1rem; }
-    .btn-insights { color: var(--gold); text-decoration: none; font-size: 0.7rem; border: 1px solid var(--gold); padding: 5px 10px; border-radius: 4px; font-weight: bold; }
-    .btn-insights:hover { background: var(--gold); color: #000; }
-    .btn-back { color: var(--text); text-decoration: none; font-size: 0.8rem; border: 1px solid #444; padding: 8px 15px; border-radius: 5px; }
-  </style>
-</head>
-<body>
+<script>
+  const clan = [
+    { name: "envys", id: "401359" },
+    { name: "sinister", id: "2598146" },
+    { name: "mauricioae13", id: "9449579" },
+    { name: "MrOsoVC8", id: "1485562" }
+  ];
 
-  <nav>
-    <a href="index.html" class="nav-logo">VENON CLAN</a>
-    <a href="index.html" class="btn-back">← Volver</a>
-  </nav>
+  async function loadStats() {
+    const tbody = document.getElementById('player-rows');
+    tbody.innerHTML = ""; 
 
-  <div class="container">
-    <h1>RANKING OFICIAL</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>GUERRERO</th>
-          <th>ELO 1V1</th>
-          <th>PERFIL</th>
-        </tr>
-      </thead>
-      <tbody id="player-rows">
-        </tbody>
-    </table>
-  </div>
+    for (let p of clan) {
+      // Creamos la fila base
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><span class="player-name">VENÓN | ${p.name}</span></td>
+        <td id="elo-${p.id}" class="elo-val">...</td>
+        <td><a href="https://www.aoe2insights.com/user/${p.id}/" target="_blank" class="btn-insights">VER MÁS ↗</a></td>
+      `;
+      tbody.appendChild(row);
 
-  <script>
-    const clan = [
-      { name: "envys", id: "401359" },
-      { name: "sinister", id: "2598146" },
-      { name: "mauricioae13", id: "9449579" },
-      { name: "MrOsoVC8", id: "1485562" }
-    ];
-
-    async function loadStats() {
-      const tbody = document.getElementById('player-rows');
-      
-      for (let p of clan) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td><span class="player-name">VENÓN | ${p.name}</span></td>
-          <td id="elo-${p.id}" class="elo-val">...</td>
-          <td><a href="https://www.aoe2insights.com/user/${p.id}/" target="_blank" class="btn-insights">VER MÁS ↗</a></td>
-        `;
-        tbody.appendChild(row);
-
-        // Llamada directa a la API (Netlify suele permitir esto mejor)
-        try {
-          const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.ageofempires.com/api/v1/ageii/GetPlayerProfile?profileId=' + p.id)}`);
-          const data = await response.json();
-          const stats = JSON.parse(data.contents);
-          
-          if (stats && stats.user) {
-            document.getElementById(`elo-${p.id}`).innerText = stats.user.rating || "N/A";
-          }
-        } catch (error) {
-          document.getElementById(`elo-${p.id}`).innerText = "Error";
+      try {
+        // Usamos la API de Insights a través del proxy
+        const targetUrl = `https://www.aoe2insights.com/api/v4/player/${p.id}/`;
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
+        
+        if (!response.ok) throw new Error();
+        
+        const data = await response.json();
+        const stats = JSON.parse(data.contents);
+        
+        // Buscamos el ELO de RM 1v1 en la estructura de Insights
+        let rating = "N/A";
+        
+        if (stats && stats.rating) {
+           rating = stats.rating;
+        } else if (stats && stats.leaderboard && stats.leaderboard.length > 0) {
+           // Si no está directo, lo buscamos en su lista de rankings
+           const rm1v1 = stats.leaderboard.find(l => l.leaderboard_id === 3);
+           if (rm1v1) rating = rm1v1.rating;
         }
+
+        document.getElementById(`elo-${p.id}`).innerText = rating;
+      } catch (e) {
+        console.error("Error cargando a " + p.name, e);
+        document.getElementById(`elo-${p.id}`).innerText = "N/A";
       }
     }
+  }
 
-    document.addEventListener('DOMContentLoaded', loadStats);
-  </script>
-</body>
-</html>
+  document.addEventListener('DOMContentLoaded', loadStats);
+</script>
