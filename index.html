@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venon Clan | Inicio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070707; --card: #111111; --accent: #b30000;
+      --accent-soft: #ff3b3b; --text: #f2f2f2; --muted: #b5b5b5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top, #140000, #070707 60%);
+      color: var(--text); line-height: 1.6;
+    }
+
+    /* BARRA DE NAVEGACIÓN */
+    nav {
+      position: fixed; top: 0; width: 100%; height: 70px;
+      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 50px; z-index: 1000; border-bottom: 1px solid rgba(179,0,0,0.3);
+    }
+    .nav-logo { font-family: 'Orbitron'; color: var(--accent); font-weight: bold; text-decoration: none; font-size: 1.4rem; }
+    .nav-links { display: flex; list-style: none; }
+    .nav-links li { margin-left: 25px; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+    .nav-links a:hover { color: var(--accent-soft); }
+
+    header { padding: 140px 20px 80px; text-align: center; }
+    header img { width: 180px; max-width: 80%; margin-bottom: 30px; filter: drop-shadow(0 0 25px rgba(179,0,0,0.6)); }
+    header h1 { font-family: 'Orbitron', sans-serif; font-size: 3.2rem; letter-spacing: 4px; color: var(--accent); }
+    header p { max-width: 620px; margin: 24px auto 0; color: var(--muted); font-size: 1.1rem; }
+
+    section { padding: 70px 20px; max-width: 1100px; margin: 0 auto; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+    .card {
+      background: linear-gradient(180deg, #111111, #0b0b0b); border-radius: 18px;
+      padding: 32px; border: 1px solid rgba(179,0,0,0.15); transition: 0.3s ease;
+    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 25px 60px rgba(179,0,0,0.25); }
+    .card h3 { font-family: 'Orbitron'; margin-bottom: 14px; color: var(--accent-soft); }
+
+    .contact { text-align: center; border-top: 1px solid rgba(179,0,0,0.2); }
+    .contact a {
+      display: inline-block; margin-top: 28px; padding: 16px 36px; border-radius: 999px;
+      background: linear-gradient(135deg, #b30000, #ff3b3b); color: white;
+      text-decoration: none; font-weight: 600; box-shadow: 0 0 30px rgba(179,0,0,0.6);
+    }
+    footer { padding: 50px 20px; text-align: center; color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">VENON</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="ranking.html" style="color: #d4af37;">Ranking Venon</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <img src="logo completo.png" alt="Venon Clan Logo">
+    <h1>VENON</h1>
+    <p>Clan competitivo y comunidad organizada. Identidad, disciplina y presencia profesional dentro y fuera del juego.</p>
+  </header>
+
+  <section>
+    <div class="grid">
+      <div class="card">
+        <h3>Comunidad</h3>
+        <p>Una estructura sólida enfocada en crecimiento, constancia y respeto entre los miembros del clan.</p>
+      </div>
+      <div class="card">
+        <h3>Competencia</h3>
+        <p>Participación en torneos, ligas y showmatches, representando a Venon con seriedad y compromiso.</p>
+      </div>
+      <div class="card">
+        <h3>Patrocinios</h3>
+        <p>Espacio para marcas y aliados estratégicos que busquen visibilidad y colaboración real.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <h2>Contacto</h2>
+    <a href="mailto:contacto@venon.gg">CONTACTAR</a>
+  </section>
+
+  <footer>© 2026 Venon Clan · Todos los derechos reservados</footer>
+
+</body>
+</html>
