@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VENÓN CLAN | Official Hub</title>
+    <title>VENÓN | Clan y Comunidad Competitiva AoE II</title>
+    <link rel="icon" type="image/png" href="logo completo.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
     <style>
         :root {
             --bg: #030303;
-            --card: rgba(15, 15, 15, 0.9);
+            --card: rgba(15, 15, 15, 0.95);
             --accent: #ff2200;
-            --accent-glow: rgba(255, 34, 0, 0.5);
+            --accent-glow: rgba(255, 34, 0, 0.4);
+            --twitch: #9146FF;
+            --discord: #5865F2;
+            --insta: #E1306C;
             --text: #ffffff;
-            --muted: #888888;
+            --muted: #a0a0a0;
             --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -26,139 +33,86 @@
             line-height: 1.6;
         }
 
-        /* --- REDES SOCIALES --- */
-        .social-container {
-            display: flex; gap: 15px; justify-content: center;
-            margin-top: 50px; flex-wrap: wrap; position: relative; z-index: 10;
-        }
-        .btn-social {
-            padding: 12px 25px; border-radius: 4px; text-decoration: none;
-            color: white !important; font-weight: 700; font-size: 0.75rem;
-            letter-spacing: 2px; text-transform: uppercase; transition: var(--transition);
-            border: 1px solid rgba(255,255,255,0.1); min-width: 140px; text-align: center;
-        }
-        .btn-social:hover { transform: translateY(-5px); filter: brightness(1.2); }
-        .twitch { background-color: #9146FF; }
-        .instagram { background-color: #E1306C; }
-        .discord { background-color: #5865F2; }
-
-        /* --- FONDO Y CENIZAS --- */
+        /* --- EFECTO DE FONDO (CENIZAS) --- */
         .fire-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 50% 100%, #200000 0%, transparent 70%), linear-gradient(to bottom, #050505, #000);
-            overflow: hidden;
+            background: radial-gradient(circle at 50% 100%, #1a0000 0%, #000 70%);
         }
-        .ash { position: absolute; background: rgba(255, 255, 255, 0.2); border-radius: 50%; filter: blur(1px); animation: fall linear infinite; }
+        .ash { position: absolute; background: rgba(255, 255, 255, 0.15); border-radius: 50%; filter: blur(1px); animation: fall linear infinite; }
         @keyframes fall {
             0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(110vh) translateX(50px) rotate(360deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            100% { transform: translateY(110vh) translateX(40px) rotate(360deg); opacity: 0; }
         }
 
         /* --- NAVEGACIÓN --- */
         nav {
-            position: fixed; top: 0; width: 100%; height: 90px;
+            position: fixed; top: 0; width: 100%; height: 80px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 8%; z-index: 1000;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 34, 0, 0.1);
+            padding: 0 5%; z-index: 1000;
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 34, 0, 0.2);
         }
-        .nav-logo { font-family: 'Cinzel', serif; color: #fff; font-weight: 900; text-decoration: none; font-size: 1.8rem; letter-spacing: 6px; text-shadow: 0 0 15px var(--accent-glow); }
+        .nav-logo { font-family: 'Cinzel', serif; color: #fff; font-weight: 900; text-decoration: none; font-size: 1.6rem; letter-spacing: 4px; }
         .nav-logo span { color: var(--accent); }
-        .nav-links { display: flex; list-style: none; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; transition: var(--transition); }
+        .nav-links { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--muted); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
         .nav-links a:hover { color: var(--accent); }
+        .nav-links .twitch-link { color: var(--twitch); }
 
-        /* --- HERO --- */
-        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
-        .hero-logo { width: 220px; margin-bottom: 30px; filter: drop-shadow(0 0 40px var(--accent-glow)); animation: float 6s infinite ease-in-out; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        header h1 { font-family: 'Cinzel', serif; font-size: clamp(3.5rem, 10vw, 6.5rem); letter-spacing: 20px; color: #fff; line-height: 1; }
-        .hero-tagline { letter-spacing: 8px; color: var(--accent); font-weight: 700; margin: 20px 0; font-size: 1.2rem; text-shadow: 0 0 10px var(--accent-glow); }
-
-        /* --- CARRUSEL DE NOTICIAS --- */
-        .news-section { padding: 80px 5%; text-align: center; }
-        .news-title { font-family: 'Cinzel', serif; font-size: 3rem; margin-bottom: 40px; letter-spacing: 12px; color: #fff; }
-        
-        .carousel-container {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            overflow: hidden;
-            border: 2px solid var(--accent);
-            background: #000;
-            border-radius: 8px;
-            box-shadow: 0 0 30px rgba(255, 34, 0, 0.2);
+        /* --- CINTA DE NOTICIAS --- */
+        .news-ticker {
+            position: fixed; top: 80px; width: 100%; height: 35px; background: var(--accent);
+            display: flex; align-items: center; overflow: hidden; z-index: 999;
         }
-        
-        .carousel-track { display: flex; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        
-        .news-slide {
-            min-width: 100%;
-            min-height: 500px;
-            padding: 80px 10%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-        }
+        .ticker-wrapper { display: flex; white-space: nowrap; animation: ticker 30s linear infinite; }
+        .ticker-item { color: white; padding: 0 40px; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Contenedor de texto dentro del slide para asegurar legibilidad */
-        .slide-content {
-            position: relative;
-            z-index: 2;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 40px;
-            border-radius: 4px;
-            border-left: 5px solid var(--accent);
-            backdrop-filter: blur(10px);
-        }
-        
-        .news-slide h3 { 
-            font-family: 'Cinzel', serif; 
-            color: var(--accent); 
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 25px;
-            text-shadow: 0 0 20px var(--accent-glow);
-            text-transform: uppercase;
-        }
-        
-        .news-slide p { 
-            max-width: 800px; 
-            color: #ccc; 
-            font-size: 1.2rem;
-            line-height: 1.8;
-            font-weight: 300;
-        }
+        /* --- HERO SECTION --- */
+        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: url('https://www.transparenttextures.com/patterns/dark-matter.png'); }
+        .hero-logo { width: 180px; margin-bottom: 20px; filter: drop-shadow(0 0 30px var(--accent-glow)); animation: float 5s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        header h1 { font-family: 'Cinzel', serif; font-size: clamp(3rem, 10vw, 5.5rem); letter-spacing: 12px; color: #fff; line-height: 1; margin-bottom: 10px; }
+        .hero-tagline { color: var(--accent); font-weight: 700; letter-spacing: 6px; font-size: 1rem; text-transform: uppercase; margin-bottom: 30px; }
 
-        .carousel-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5); border: 1px solid var(--accent); color: white;
-            width: 60px; height: 60px; border-radius: 50%; cursor: pointer; z-index: 11; 
-            transition: 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;
+        /* --- SHOWMATCH BANNER --- */
+        .showmatch-banner {
+            width: 100%; padding: 120px 5%;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            text-align: center; border-top: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
         }
-        .carousel-btn:hover { background: var(--accent); box-shadow: 0 0 20px var(--accent); }
-        .prev { left: 20px; }
-        .next { right: 20px; }
+        .score-container { display: flex; justify-content: center; align-items: center; gap: 40px; margin: 30px 0; }
+        .score-box { font-family: 'Cinzel', serif; font-size: clamp(3rem, 8vw, 5rem); font-weight: 900; text-shadow: 0 0 20px var(--accent-glow); padding: 0 20px; }
+        .vs-text { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--accent); letter-spacing: 5px; font-weight: 900; }
 
-        /* --- SECCIONES Y CARDS --- */
-        section { padding: 100px 10%; position: relative; z-index: 5; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: var(--card); padding: 60px 40px; border: 1px solid rgba(255, 255, 255, 0.05); transition: var(--transition); text-align: center;}
-        .card:hover { transform: translateY(-15px); border-color: var(--accent-glow); }
-        .card h3 { font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 15px; letter-spacing: 3px; }
+        /* --- BOTONES --- */
+        .social-btn { display: inline-block; padding: 15px 35px; background: transparent; color: #fff; border: 1px solid var(--accent); text-decoration: none; font-size: 0.8rem; font-weight: 900; letter-spacing: 2px; transition: 0.4s; cursor: pointer; }
+        .social-btn:hover { background: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+        .btn-twitch { border-color: var(--twitch); margin-top: 20px; }
+        .btn-twitch:hover { background: var(--twitch); box-shadow: 0 0 20px rgba(145, 70, 255, 0.4); }
+        .btn-discord { background: var(--discord); border-color: var(--discord); }
+        .btn-discord:hover { background: transparent; color: #fff; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
+        .btn-insta { border-color: var(--insta); color: #fff; }
+        .btn-insta:hover { background: var(--insta); box-shadow: 0 0 20px rgba(225, 48, 108, 0.4); }
 
-        .contact { text-align: center; padding: 100px 20px; }
-        .btn-cta { display: inline-block; padding: 25px 60px; background: #fff; color: #000; text-decoration: none; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); margin-bottom: 20px; transition: 0.3s;}
-        .btn-cta:hover { background: var(--accent); color: #fff; box-shadow: 0 0 50px var(--accent-glow); }
+        /* --- INSTAGRAM FEED --- */
+        .insta-section { padding: 80px 10%; }
+        .section-title { font-family: 'Cinzel', serif; text-align: center; font-size: 2rem; letter-spacing: 8px; margin-bottom: 50px; }
+        .insta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .insta-card { background: #0a0a0a; border: 1px solid #1a1a1a; overflow: hidden; border-radius: 4px; }
+        .insta-header { padding: 12px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.85rem; }
+        .insta-header img { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--accent); }
+        .insta-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
 
-        footer { padding: 40px; text-align: center; color: #333; font-size: 0.7rem; letter-spacing: 5px; }
+        footer { padding: 40px; text-align: center; color: #444; font-size: 0.7rem; letter-spacing: 3px; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            header h1 { font-size: 3rem; }
+        }
     </style>
 </head>
 <body>
@@ -166,110 +120,101 @@
     <div class="fire-container" id="fireContainer"></div>
 
     <nav>
-        <a href="index.html" class="nav-logo">VE<span>NÓN</span></a>
+        <a href="#" class="nav-logo">VE<span>NÓN</span></a>
         <ul class="nav-links">
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="ranking.html">Ranking Venón</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#noticias">Noticias</a></li>
+            <li><a href="#showmatch">Showmatch</a></li>
+            <li><a href="#feed">Instagram</a></li>
+            <li><a href="https://www.twitch.tv/TU_CANAL" target="_blank" class="twitch-link">Twitch</a></li>
+            <li><a href="#unirse" style="color: white; border: 1px solid var(--accent); padding: 5px 10px;">Discord</a></li>
         </ul>
     </nav>
 
+    <div class="news-ticker" id="noticias">
+        <div class="ticker-wrapper">
+            <div class="ticker-item">PRÓXIMO SHOWMATCH VS OS: SÁBADO 7 FEBRERO 20:00 GMT</div>
+            <div class="ticker-item">ÚNETE AL DISCORD OFICIAL DE VENÓN</div>
+            <div class="ticker-item">SÍGUENOS EN TWITCH PARA LOS EN VIVO</div>
+            <div class="ticker-item">VENÓN TOP #1 MÉXICO</div>
+            <div class="ticker-item">PRÓXIMO SHOWMATCH VS OS: SÁBADO 7 FEBRERO 20:00 GMT</div>
+        </div>
+    </div>
+
     <header>
-        <img src="logo completo.png" alt="Venon Clan Logo" class="hero-logo">
-        <h1>VENÓN</h1>
-        <p class="hero-tagline">CLAN AGE OF EMPIRES 2 DE</p>
-        <p style="max-width: 600px; opacity: 0.5; font-weight: 300;">Estableciendo el dominio absoluto en la escena competitiva global.</p>
+        <img src="logo completo.png" alt="Venon Logo" class="hero-logo">
+        <h1 data-aos="fade-down">VENÓN</h1>
+        <p class="hero-tagline" data-aos="fade-up">Clan y Comunidad Competitiva</p>
     </header>
 
-    <section>
-        <div class="grid">
-            <div class="card">
-                <h3>COMUNIDAD</h3>
-                <p>Esta es la casa de los que quieran jugar en uno de los mejores clanes mexicanos.</p>
+    <section id="showmatch" class="showmatch-banner" data-aos="fade-up">
+        <h2 style="font-family: 'Cinzel'; letter-spacing: 5px; color: var(--accent);">PRÓXIMO SHOWMATCH</h2>
+        <p style="letter-spacing: 3px; font-weight: 700; margin-top: 10px; color: var(--muted);">SATURDAY 7TH FEBRUARY, 20:00 GMT</p>
+        
+        <div class="score-container">
+            <div class="team">
+                <p style="letter-spacing: 3px; font-weight: 900;">VENÓN</p>
+                <div class="score-box">-</div>
             </div>
-            <div class="card">
-                <h3>COMPETENCIA</h3>
-                <p>Buscamos posicionarnos en el top Mexicano a base de coraje y elo.</p>
+            <div class="vs-text">VS</div>
+            <div class="team">
+                <p style="letter-spacing: 3px; font-weight: 900;">OS</p>
+                <div class="score-box">-</div>
             </div>
-            <div class="card">
-                <h3>ALIANZAS</h3>
-                <p>Tener comunicación en la comunidad tanto nacional como internacional.</p>
+        </div>
+        <p style="font-weight: 700; letter-spacing: 2px; margin-bottom: 20px;">BATALLA DE TITANES</p>
+        <a href="https://www.twitch.tv/TU_CANAL" target="_blank" class="social-btn btn-twitch">VER EN VIVO (TWITCH)</a>
+    </section>
+
+    <section id="feed" class="insta-section">
+        <h2 class="section-title" data-aos="fade-up">INSTAGRAM FEED</h2>
+        <div class="insta-grid">
+            <div class="insta-card" data-aos="fade-up">
+                <div class="insta-header"><img src="logo completo.png"> venon.aoe</div>
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600" class="insta-img">
             </div>
+            <div class="insta-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="insta-header"><img src="logo completo.png"> venon.aoe</div>
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600" class="insta-img">
+            </div>
+            <div class="insta-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="insta-header"><img src="logo completo.png"> venon.aoe</div>
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600" class="insta-img">
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px;" data-aos="fade-up">
+            <a href="https://www.instagram.com/venon.aoe" target="_blank" class="social-btn btn-insta">
+                SÍGUENOS EN INSTAGRAM
+            </a>
         </div>
     </section>
 
-    <section class="news-section">
-        <h2 class="news-title">NOVEDADES</h2>
-        <div class="carousel-container">
-            <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
-            <div class="carousel-track" id="carouselTrack">
-                
-                <div class="news-slide" style="background-image: radial-gradient(circle, rgba(255,34,0,0.1), transparent);">
-                    <div class="slide-content">
-                        <h3>NUEVA ERA</h3>
-                        <p>Iniciamos el proceso de profesionalización. Venón no es solo un clan, es una armada lista para conquistar cada torneo en el que participemos.</p>
-                    </div>
-                </div>
-
-                <div class="news-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('image_a6aafd.jpg'); background-size: contain;">
-                    <div class="slide-content">
-                        <h3>OS VS VENON</h3>
-                        <p>SHOWMATCH 7th February, 20 GMT, Nos vemos en Twitch para la batalla definitiva.</p>
-                    </div>
-                </div>
-
-                <div class="news-slide" style="background-image: radial-gradient(circle, rgba(255,34,0,0.1), transparent);">
-                    <div class="slide-content">
-                        <h3>DOMINIO AOE 2</h3>
-                        <p>Proximamente anunciaremos showmatch, torneos en los que nuestros jugadores participan y noticias relevantes.</p>
-                    </div>
-                </div>
-
-            </div>
-            <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
-        </div>
-    </section>
-
-    <section class="contact" id="contacto">
-        <h2 style="font-family: 'Cinzel'; margin-bottom: 50px; letter-spacing: 10px;">Contacto</h2>
-        <a href="mailto:contacto@venon.gg" class="btn-cta">CORREO</a>
-        <div class="social-container">
-            <a href="https://www.twitch.tv/sharis0308" target="_blank" class="btn-social twitch">Twitch</a>
-            <a href="https://www.instagram.com/venon.aoe/" target="_blank" class="btn-social instagram">Instagram</a>
-            <a href="https://discord.gg/JcGBasgD" target="_blank" class="btn-social discord">Discord</a>
+    <section id="unirse" class="cta-section" style="padding: 100px 10%; text-align: center;">
+        <div class="cta-box" data-aos="zoom-in" style="border: 1px solid var(--accent); padding: 60px;">
+            <h2 style="font-family: 'Cinzel'; margin-bottom: 20px; font-size: 2.5rem;">ÚNETE A LA LEGIÓN</h2>
+            <p style="margin-bottom: 30px; opacity: 0.7; max-width: 600px; margin-left: auto; margin-right: auto;">
+                ¿Eres un jugador de Age of Empires II buscando competencia real? Únete a nuestro Discord para participar en torneos, entrenamientos y formar parte del clan #1 de México.
+            </p>
+            <a href="https://discord.gg/TU_LINK" target="_blank" class="social-btn btn-discord" style="font-size: 1rem; padding: 20px 50px;">UNIRSE AL DISCORD</a>
         </div>
     </section>
 
     <footer>
-        &copy; 2026 VENÓN CLAN &bull; EL ESTÁNDAR DE LA ÉLITE
+        &copy; 2026 VENÓN | CLAN Y COMUNIDAD COMPETITIVA
     </footer>
 
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // Lógica del Carrusel
-        let currentSlide = 0;
-        function moveSlide(step) {
-            const track = document.getElementById('carouselTrack');
-            const slides = document.querySelectorAll('.news-slide');
-            currentSlide = (currentSlide + step + slides.length) % slides.length;
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-
-        // Auto-play (Cambia cada 7 segundos)
-        setInterval(() => moveSlide(1), 7000);
-
-        // Generador de cenizas
+        AOS.init({ duration: 1000, once: true });
         const container = document.getElementById('fireContainer');
-        const ashCount = 50;
-        for (let i = 0; i < ashCount; i++) {
+        for (let i = 0; i < 35; i++) {
             const ash = document.createElement('div');
             ash.classList.add('ash');
-            const size = Math.random() * 4 + 'px';
-            const left = Math.random() * 100 + '%';
-            const duration = Math.random() * 5 + 5 + 's';
-            const delay = Math.random() * 5 + 's';
-            ash.style.width = size; ash.style.height = size; ash.style.left = left;
-            ash.style.animationDuration = duration; ash.style.animationDelay = delay;
-            ash.style.opacity = Math.random();
+            const size = Math.random() * 3 + 'px';
+            ash.style.width = size; ash.style.height = size;
+            ash.style.left = Math.random() * 100 + '%';
+            ash.style.animationDuration = Math.random() * 5 + 5 + 's';
+            ash.style.animationDelay = Math.random() * 5 + 's';
             container.appendChild(ash);
         }
     </script>
