@@ -25,22 +25,39 @@
             overflow-x: hidden;
             line-height: 1.6;
         }
-        .social-container {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    padding: 20px;
-}
 
-.btn-social {
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    transition: transform 0.2s, background-color 0.2s;
-}
-        /* --- EFECTO DE CENIZAS Y FONDO --- */
+        /* --- ESTILOS DE REDES SOCIALES --- */
+        .social-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .btn-social {
+            padding: 12px 25px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-social:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .twitch { background-color: #9146FF; }
+        .instagram { background-color: #E1306C; }
+        .discord { background-color: #5865F2; }
+
+        /* --- RESTO DE TUS ESTILOS --- */
         .fire-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -65,7 +82,6 @@
             100% { transform: translateY(110vh) translateX(50px) rotate(360deg); opacity: 0; }
         }
 
-        /* --- NAVEGACIÓN --- */
         nav {
             position: fixed; top: 0; width: 100%; height: 90px;
             display: flex; justify-content: space-between; align-items: center;
@@ -107,7 +123,6 @@
             background: rgba(212, 175, 55, 0.05);
         }
 
-        /* --- HERO --- */
         header { 
             height: 100vh;
             display: flex;
@@ -147,7 +162,6 @@
             text-shadow: 0 0 10px var(--accent-glow);
         }
 
-        /* --- CARDS CON MÁS PRESENCIA --- */
         section { padding: 100px 10%; }
         
         .grid { 
@@ -190,7 +204,6 @@
 
         .card p { color: var(--muted); font-size: 0.9rem; line-height: 1.8; }
 
-        /* --- SECCIÓN CONTACTO --- */
         .contact { 
             text-align: center; 
             padding: 150px 20px;
@@ -206,6 +219,7 @@
             text-transform: uppercase;
             transition: var(--transition);
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            display: inline-block;
         }
 
         .btn-cta:hover {
@@ -249,18 +263,25 @@
             </div>
             <div class="card">
                 <h3>COMPETENCIA</h3>
-                <p>Buscamos pocisionarnos en el top Mexicano a base de coraje y elo.</p>
+                <p>Buscamos posicionarnos en el top Mexicano a base de coraje y elo.</p>
             </div>
             <div class="card">
                 <h3>ALIANZAS</h3>
-                <p>Tener comunicacion en la comunidad tanto nacional como internacional.</p>
+                <p>Tener comunicación en la comunidad tanto nacional como internacional.</p>
             </div>
         </div>
     </section>
 
     <section class="contact" id="contacto">
         <h2 style="font-family: 'Cinzel'; margin-bottom: 50px; letter-spacing: 10px;">Contacto</h2>
+        
         <a href="mailto:contacto@venon.gg" class="btn-cta">CORREO</a>
+
+        <div class="social-container">
+            <a href="https://www.twitch.tv/sharis0308" target="_blank" class="btn-social twitch">Twitch</a>
+            <a href="https://www.instagram.com/venon.aoe/" target="_blank" class="btn-social instagram">Instagram</a>
+            <a href="https://discord.gg/JcGBasgD" target="_blank" class="btn-social discord">Discord</a>
+        </div>
     </section>
 
     <footer>
@@ -268,32 +289,23 @@
     </footer>
 
     <script>
-        // Generador de cenizas dinámico
         const container = document.getElementById('fireContainer');
         const ashCount = 50;
-
         for (let i = 0; i < ashCount; i++) {
             const ash = document.createElement('div');
             ash.classList.add('ash');
-            
-            // Valores aleatorios para cada partícula
             const size = Math.random() * 4 + 'px';
             const left = Math.random() * 100 + '%';
             const duration = Math.random() * 5 + 5 + 's';
             const delay = Math.random() * 5 + 's';
-            
             ash.style.width = size;
             ash.style.height = size;
             ash.style.left = left;
             ash.style.animationDuration = duration;
             ash.style.animationDelay = delay;
             ash.style.opacity = Math.random();
-            
             container.appendChild(ash);
         }
     </script>
 </body>
 </html>
-
-
-
